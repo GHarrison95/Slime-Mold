@@ -41,7 +41,14 @@ classdef scent_field_orig<handle
         end
 
 %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-%       % get field value at a point
+%       % get field value at an arbitrary point through interpolation
+%       %    off the edge returns -1
+function val = Field_val_interp(scent_field,x,y)
+            val = interp2(scent_field.Field,x,y,'linear',-1);
+        end
+
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%       % get field value at a grid point
 %       %    off the edge returns -1
         function val = Field_val(obj,x,y)
             if (x<1 || x>obj.size_x || y<1 || y>obj.size_y)

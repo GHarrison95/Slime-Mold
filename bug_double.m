@@ -73,7 +73,7 @@ classdef bug_double<handle
                 next_pos_x = bug.Pos_x + bug.Speed*cos(dir);
                 next_pos_y = bug.Pos_y + bug.Speed*sin(dir);
 
-                vals(i+2) = Field_val(scent_field, round(next_pos_x), round(next_pos_y));
+                vals(i+2) = Field_val_interp(scent_field, round(next_pos_x), round(next_pos_y));
 
             end
             %currently defaults to the leftmost in a tie

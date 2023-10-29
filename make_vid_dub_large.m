@@ -3,14 +3,14 @@ close all
 
 time_start = tic;
 
-vid_title = 'test_guy.avi';
+vid_title = 'vids/test_guy.avi';
 
-size_x = 450;
-size_y = 450;
+size_x = 400;
+size_y = 400;
 
 num_bug = 2000;
 
-t_steps = 200;
+t_steps = 3;
 
 scent_field = scent_field_orig(size_x,size_y);
 bug_list = [];
