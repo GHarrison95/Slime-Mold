@@ -1,9 +1,9 @@
-% clear all
-% close all
+clear all
+close all
 
 time_start = tic;
 
-vid_title = 'vids/test_guy2_cont.avi';
+vid_title = 'vids/test_guy2.avi';
 
 size_x = 400;
 size_y = 400;
@@ -12,21 +12,21 @@ num_bug = 2000;
 
 t_steps = 300;
 
-% scent_field = scent_field_orig(size_x,size_y);
-% bug_list = [];
+scent_field = scent_field_orig(size_x,size_y);
+bug_list = [];
 
 bug_time = tic;
 disp('generating bugs')
 
-% for i=1:1:num_bug
-% %     x = round(rand()*(size_x-1)) + 1;
-% %     y = round(rand()*(size_y-1)) + 1;
-%     x = round(rand()*(10)) + size_x/2 -5;
-%     y = round(rand()*(10)) + size_y/2 -5;
-% 
-%     dir = round(rand()*2*pi);
-%     bug_list = [bug_list, bug_double(x,y,2,dir)];
-% end
+for i=1:1:num_bug
+%     x = round(rand()*(size_x-1)) + 1;
+%     y = round(rand()*(size_y-1)) + 1;
+    x = round(rand()*(10)) + size_x/2 -5;
+    y = round(rand()*(10)) + size_y/2 -5;
+
+    dir = round(rand()*2*pi);
+    bug_list = [bug_list, bug_double(x,y,2,dir)];
+end
 
 disp(['done bug gen    it took ',num2str(toc(bug_time)),' secs'])
 
