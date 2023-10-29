@@ -3,7 +3,7 @@ close all
 
 time_start = tic;
 
-vid_title = 'vids/test_guy.avi';
+vid_title = 'vids/test_guy2.avi';
 
 size_x = 400;
 size_y = 400;
