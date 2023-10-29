@@ -1,6 +1,7 @@
 clear all
 close all
 
+%just checking that this is working correctly
 
 size_x = 150;
 size_y = 150;
