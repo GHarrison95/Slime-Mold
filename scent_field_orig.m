@@ -5,7 +5,7 @@
 classdef scent_field_orig<handle
 
     properties
-        Field (:,:) double %the 2D area containing scents
+        Field (:,:) single %the 2D area containing scents
 
         %the bounds of the Field
         size_x int16 
@@ -13,11 +13,11 @@ classdef scent_field_orig<handle
     end
 
     properties (Access = private)
-        K (:,:) double %convolution kernal
+        K (:,:) single %convolution kernal
     end
     properties (Constant)
         scent_add = 1; %amount added by a bug every step
-        scent_loss = 1.0; %percentage kept after every step
+        scent_loss = 0.9; %percentage kept after every step
 
         diffuse_strength = 1.5;%2.75;
     end

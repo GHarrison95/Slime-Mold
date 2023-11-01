@@ -17,7 +17,7 @@ classdef bug_double<handle
     end
 
     properties (Constant) %, Access = private
-        Smell_angle = 0.5236 % 30 deg
+        Smell_angle = 0.9 %0.5236 % 30 deg
                              % the angle that left and right are
         Accel = 1;
         Speed_base = 2; % lowest poss speed
@@ -53,7 +53,8 @@ classdef bug_double<handle
             else
                 %this is my reflect function
                 %it is dumb for now
-                bug.Dir = round(rand()*2*pi);
+                bug.Dir = (rand()*2*pi);
+                bug.Speed = bug.Speed*0.75;
                 move(bug, scent_field)
             end
         end
