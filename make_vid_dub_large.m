@@ -25,11 +25,11 @@ bug_list = bug_double.empty(0,num_bug);
 
 for i=1:1:num_bug %define bug positions and such
     
-    x = (rand()*(size_x-1)) + 1; %Uniformly distribute
-    y = (rand()*(size_y-1)) + 1;
+%     x = (rand()*(size_x-1)) + 1; %Uniformly distribute
+%     y = (rand()*(size_y-1)) + 1;
 
-%     x = (rand()*(10)) + size_x/2 -5; %Cluster at center
-%     y = (rand()*(10)) + size_y/2 -5;
+    x = (rand()*(10)) + size_x/2 -5; %Cluster at center
+    y = (rand()*(10)) + size_y/2 -5;
 
     dir = (rand()*2*pi); %random direction in rads
     
