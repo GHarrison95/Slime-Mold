@@ -17,7 +17,7 @@ classdef bug_double<handle
     end
 
     properties (Constant) %, Access = private
-        Smell_angle = 0.9 %0.5236 % 30 deg
+        Smell_angle = 0.6 %0.5236 % 30 deg
                              % the angle that left and right are
         Accel = 1;
         Speed_base = 2; % lowest poss speed
