@@ -8,7 +8,7 @@ vid_title = 'vids/test.avi';
 size_x = 250; %size of the grid the bugs
 size_y = 250; %will live on
 
-num_bug = 6000;
+num_bug = 3000;
 
 t_steps = 310; %how many time steps to go. 10 per sec. 
                 %add 10 to get time right
@@ -32,10 +32,11 @@ for i=1:1:num_bug %define bug positions and such
     y = (rand()*(10)) + size_y/2 -5;
 
     dir = (rand()*2*pi); %random direction in rads
+    speed = (rand()*2); %random initial speed
     
     %append to list
 %     bug_list = [bug_list, bug_double(x,y,2,dir)]; 
-    bug_list(i) = bug_double(x,y,0,dir);
+    bug_list(i) = bug_double(x,y,speed,dir);
     
     %also put down their initial scents
     scent_field.add_scent(round(x),round(y));
