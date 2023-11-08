@@ -5,7 +5,7 @@
 classdef scent_field_orig<handle
 
     properties
-        Field (:,:) double %the 2D area containing scents
+        Field (:,:) single %the 2D area containing scents
 
         %the bounds of the Field
         size_x int16 
@@ -13,11 +13,11 @@ classdef scent_field_orig<handle
     end
 
     properties (Access = private)
-        K (:,:) double %convolution kernal
+        K (:,:) single %convolution kernal
     end
     properties (Constant)
         scent_add = 1; %amount added by a bug every step
-        scent_loss = 1.0; %percentage kept after every step
+        scent_loss = 0.9; %percentage kept after every step
 
         diffuse_strength = 1.5;%2.75;
     end
@@ -37,18 +37,27 @@ classdef scent_field_orig<handle
             [C{:}] = ndgrid([1 0 1]);
             tmp = 1./(sum(cat(3,C{:}),3)+1);
 %             tmp = sum(cat(3,C{:}),3) <= 1;
-            obj.K = obj.diffuse_strength*tmp/nnz(tmp);
+            obj.K = obj.scent_loss*obj.diffuse_strength*tmp/nnz(tmp);
         end
 
 %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-%       % get field value at a point
+%       % get field value at an arbitrary point through interpolation
 %       %    off the edge returns -1
-        function val = Field_val(obj,x,y)
-            if (x<1 || x>obj.size_x || y<1 || y>obj.size_y)
-                val = -1;
-            else
-                val = obj.Field(x,y);
-            end
+function val = Field_val_interp(scent_field,x,y)
+            val = interp2(scent_field.Field,x,y,'linear',-1);
+        end
+
+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+%       % get field value at a grid point
+%       %    off the edge returns -1
+        function val = Field_val(scent_field,x,y)
+            
+            val = interp2(scent_field.Field,x,y,'nearest',-1);
+%             if (x<1 || x>obj.size_x || y<1 || y>obj.size_y)
+%                 val = -1;
+%             else
+%                 val = obj.Field(x,y);
+%             end
         end
 
 %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -65,7 +74,7 @@ classdef scent_field_orig<handle
             obj.Field = conv2(obj.Field,obj.K,'same');
 
             %decrease all scents as they fade
-            obj.Field = obj.Field * obj.scent_loss;
+%             obj.Field = obj.Field * obj.scent_loss;
         end
 
     end

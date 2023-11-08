@@ -3,69 +3,51 @@ close all
 
 time_start = tic;
 
-vid_title = 'vids/test.avi';
+vid_title = 'vids/test_guy2.avi';
 
-size_x = 250; %size of the grid the bugs
-size_y = 250; %will live on
+size_x = 400;
+size_y = 400;
 
-num_bug = 3000;
+num_bug = 2000;
 
-t_steps = 310; %how many time steps to go. 10 per sec. 
-                %add 10 to get time right
+t_steps = 300;
 
-%make scent field and bug list
 scent_field = scent_field_orig(size_x,size_y);
-% bug_list = []; 
+bug_list = [];
 
 bug_time = tic;
 disp('generating bugs')
 
-%preallocate bug_list
-bug_list = bug_double.empty(0,num_bug);
+for i=1:1:num_bug
+%     x = round(rand()*(size_x-1)) + 1;
+%     y = round(rand()*(size_y-1)) + 1;
+    x = round(rand()*(10)) + size_x/2 -5;
+    y = round(rand()*(10)) + size_y/2 -5;
 
-for i=1:1:num_bug %define bug positions and such
-    
-%     x = (rand()*(size_x-1)) + 1; %Uniformly distribute
-%     y = (rand()*(size_y-1)) + 1;
-
-    x = (rand()*(10)) + size_x/2 -5; %Cluster at center
-    y = (rand()*(10)) + size_y/2 -5;
-
-    dir = (rand()*2*pi); %random direction in rads
-    speed = (rand()*2); %random initial speed
-    
-    %append to list
-%     bug_list = [bug_list, bug_double(x,y,2,dir)]; 
-    bug_list(i) = bug_double(x,y,speed,dir);
-    
-    %also put down their initial scents
-    scent_field.add_scent(round(x),round(y));
+    dir = round(rand()*2*pi);
+    bug_list = [bug_list, bug_double(x,y,2,dir)];
 end
 
 disp(['done bug gen    it took ',num2str(toc(bug_time)),' secs'])
 
 % colors = importdata("flesh3_colormap.mat");
 
-figure('Position',[700,150,700,600])
+figure(Position=[700,150,700,600])
 colormap(flipud(bone));
 % colormap(colors)
 
+% axis off
+% set(gca,'xtick',[])
+% set(gca,'xticklabel',[])
+% set(gca,'ytick',[])
+% set(gca,'yticklabel',[])
 
 frame_start_time = tic;
 disp('making frames')
 
-%preallocate F
-F = struct('cdata',cell(1,t_steps),'colormap',cell(1,t_steps));
-
-for t=1:t_steps %t = time step
+for t=1:t_steps
     frame_time = tic;
-    
-    %plot with interp to smooth it
-    imagesc(interp2(scent_field.Field))
-    drawnow
-    F(t) = getframe(gca);
-
-    for i=1:num_bug %for each bug
+    for i=1:num_bug
         decide_dir(bug_list(i), scent_field);
         move(bug_list(i), scent_field);
 
@@ -74,9 +56,13 @@ for t=1:t_steps %t = time step
         scent_field.add_scent(pos_x,pos_y);
     end
 
-%iterate field
+
 scent_field.diffuse_scent();
 
+% figure(1, Position=[0,0,500,500])
+imagesc(interp2(scent_field.Field))
+drawnow
+F(t) = getframe(gca);
 % pause(0.01) %in seconds
 
 disp(['making frames ',num2str(100*t/t_steps),'%'])

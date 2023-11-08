@@ -53,7 +53,8 @@ classdef bug_double<handle
             else
                 %this is my reflect function
                 %it is dumb for now
-                bug.Dir = round(rand()*2*pi);
+                bug.Dir = (rand()*2*pi);
+                bug.Speed = bug.Speed*0.75;
                 move(bug, scent_field)
             end
         end
@@ -73,7 +74,7 @@ classdef bug_double<handle
                 next_pos_x = bug.Pos_x + bug.Speed*cos(dir);
                 next_pos_y = bug.Pos_y + bug.Speed*sin(dir);
 
-                vals(i+2) = Field_val(scent_field, round(next_pos_x), round(next_pos_y));
+                vals(i+2) = Field_val_interp(scent_field, round(next_pos_x), round(next_pos_y));
 
             end
             %currently defaults to the leftmost in a tie
