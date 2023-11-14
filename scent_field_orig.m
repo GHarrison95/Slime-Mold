@@ -17,9 +17,9 @@ classdef scent_field_orig<handle
     end
     properties (Constant)
         scent_add = 1; %amount added by a bug every step
-        scent_loss = 0.9; %percentage kept after every step
+%         scent_loss = 0.9; %percentage kept after every step
 
-        diffuse_strength = 1;%1.5;%2.75;
+        diffuse_strength = 0.9;%1.5;%2.75;
     end
 %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -72,7 +72,7 @@ function val = Field_val_interp(scent_field,x,y)
             obj.Field = conv2(obj.Field,obj.K,'same');
 
             %decrease all scents as they fade
-            obj.Field = obj.Field * obj.scent_loss;
+%             obj.Field = obj.Field * obj.scent_loss;
         end
 
     end
