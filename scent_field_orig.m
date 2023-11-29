@@ -37,7 +37,7 @@ classdef scent_field_orig<handle
             [C{:}] = ndgrid([1 0 1]);
             tmp = 1./(sum(cat(3,C{:}),3)+1);
 %             tmp = sum(cat(3,C{:}),3) <= 1;
-            obj.K = obj.diffuse_strength*tmp/nnz(tmp);
+            obj.K = obj.scent_loss*obj.diffuse_strength*tmp/nnz(tmp);
         end
 
 %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -50,12 +50,14 @@ function val = Field_val_interp(scent_field,x,y)
 %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 %       % get field value at a grid point
 %       %    off the edge returns -1
-        function val = Field_val(obj,x,y)
-            if (x<1 || x>obj.size_x || y<1 || y>obj.size_y)
-                val = -1;
-            else
-                val = obj.Field(x,y);
-            end
+        function val = Field_val(scent_field,x,y)
+            
+            val = interp2(scent_field.Field,x,y,'nearest',-1);
+%             if (x<1 || x>obj.size_x || y<1 || y>obj.size_y)
+%                 val = -1;
+%             else
+%                 val = obj.Field(x,y);
+%             end
         end
 
 %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
