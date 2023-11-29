@@ -20,8 +20,8 @@ classdef bug_list<handle
         Smell_angle = 0.5236; % 30 deg
                              % the angle that left and right are
         Smell_dist = 1;  %how far away they detects scents
-        Accel = 4;
-        Speed_base = 2; % lowest poss speed
+        Accel = 1;
+        Speed_base = 1; % lowest poss speed
     end
 %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -63,8 +63,10 @@ methods
             else
                 %this is my reflect function
                 %it sends the bug to the other side of the field
-                list.Pos(i,1) = mod(next_pos_x,cast(scent_field.size_x,'single'))+1;
-                list.Pos(i,2) = mod(next_pos_y,cast(scent_field.size_y,'single'))+1;
+                list.Pos(i,1) = mod(next_pos_x,cast(scent_field.size_x-1,'single'))+1;
+                list.Pos(i,2) = mod(next_pos_y,cast(scent_field.size_y-1,'single'))+1;
+                %IT DIDNT WORK :'(
+
             end
         end
 
@@ -78,21 +80,23 @@ methods
         end
         
         %Find left values
-        Xs = list.Pos(:,1) + list.Smell_dist.*cos(list.Dir - list.Smell_angle);
-        Ys = list.Pos(:,2) + list.Smell_dist.*sin(list.Dir - list.Smell_angle);
-        Vals(:,1) = interp2(scent_field.Field,Ys,Xs,'linear',-1);
+        Xs = list.Pos(:,1) + list.Speed.*cos(list.Dir - list.Smell_angle);
+        Ys = list.Pos(:,2) + list.Speed.*sin(list.Dir - list.Smell_angle);
+        Vals(:,1) = interp2(scent_field.Field,Ys,Xs,'nearest',-1);
 
         %Find center values
-        Xs = list.Pos(:,1) + list.Smell_dist.*cos(list.Dir);
-        Ys = list.Pos(:,2) + list.Smell_dist.*sin(list.Dir);
-        Vals(:,2) = interp2(scent_field.Field,Ys,Xs,'linear',-1);
+        Xs = list.Pos(:,1) + list.Speed.*cos(list.Dir);
+        Ys = list.Pos(:,2) + list.Speed.*sin(list.Dir);
+        Vals(:,2) = interp2(scent_field.Field,Ys,Xs,'nearest',-1);
 
         %Find left values
-        Xs = list.Pos(:,1) + list.Smell_dist.*cos(list.Dir + list.Smell_angle);
-        Ys = list.Pos(:,2) + list.Smell_dist.*sin(list.Dir + list.Smell_angle);
-        Vals(:,3) = interp2(scent_field.Field,Ys,Xs,'linear',-1);
+        Xs = list.Pos(:,1) + list.Speed.*cos(list.Dir + list.Smell_angle);
+        Ys = list.Pos(:,2) + list.Speed.*sin(list.Dir + list.Smell_angle);
+        Vals(:,3) = interp2(scent_field.Field,Ys,Xs,'nearest',-1);
 
         [max_scents,indexs] = max(Vals,[],2);
+
+        max_scents = max(max_scents,zeros(size(max_scents)));
 
         list.Dir = list.Dir + (indexs-2)*list.Smell_angle;
         list.Speed = list.Accel*max_scents + list.Speed_base;

@@ -5,9 +5,9 @@ scent_field = scent_field_list(30,20);
 
 
 
-list = bug_list(3,[1,1;2,3;5,4],[20;10;10],[1;0;pi]);
+list = bug_list(3,[1,1;2,3;5,4],[2;1;1],[1;0;pi]);
 
-for t=1:1:29
+for t=1:1:290
 
 scent_field.add_scents(list);
 

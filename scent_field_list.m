@@ -17,7 +17,7 @@ classdef scent_field_list<handle
     end
     properties (Constant)
         scent_add = 1; %amount added by a bug every step
-        scent_loss = 1; %percentage kept after every step
+        scent_loss = 0.9; %percentage kept after every step
 
     end
 %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -64,7 +64,7 @@ classdef scent_field_list<handle
                 scent_field scent_field_list
                 list bug_list
             end
-                ind = sub2ind([scent_field.size_x,scent_field.size_y],floor(list.Pos(:,1)),floor(list.Pos(:,2)));
+                ind = sub2ind([scent_field.size_x,scent_field.size_y],round(list.Pos(:,1)),round(list.Pos(:,2)));
                 scent_field.Field(ind) = scent_field.Field(ind)+scent_field.scent_add;
         end
 %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
