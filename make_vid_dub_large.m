@@ -5,8 +5,8 @@ time_start = tic;
 
 vid_title = 'vids/test.avi';
 
-size_x = 250; %size of the grid the bugs
-size_y = 250; %will live on
+size_x = 300; %size of the grid the bugs
+size_y = 300; %will live on
 
 num_bug = 3000;
 

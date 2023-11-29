@@ -17,9 +17,9 @@ classdef scent_field_orig<handle
     end
     properties (Constant)
         scent_add = 1; %amount added by a bug every step
-        scent_loss = 0.9; %percentage kept after every step
+%         scent_loss = 0.9; %percentage kept after every step
 
-        diffuse_strength = 1.5;%2.75;
+        diffuse_strength = 0.9;%1.5;%2.75;
     end
 %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
