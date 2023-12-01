@@ -57,7 +57,7 @@ methods
             next_pos_x = list.Pos(i,1) + list.Speed(i)*cos(list.Dir(i));
             next_pos_y = list.Pos(i,2) + list.Speed(i)*sin(list.Dir(i));
 
-            if (Field_val(scent_field, (next_pos_x), (next_pos_y))  >=0)
+            if (scent_field.Field_val_interp((next_pos_x), (next_pos_y))  >= 0)
                 list.Pos(i,1) = next_pos_x;
                 list.Pos(i,2) = next_pos_y;
             else
@@ -78,28 +78,32 @@ methods
             list bug_list
             scent_field scent_field_list
         end
+        Vals = zeros(list.num_bugs,3);
         
         %Find left values
         Xs = list.Pos(:,1) + list.Speed.*cos(list.Dir - list.Smell_angle);
         Ys = list.Pos(:,2) + list.Speed.*sin(list.Dir - list.Smell_angle);
-        Vals(:,1) = interp2(scent_field.Field,Ys,Xs,'nearest',-1);
+%         Vals(:,1) = interp2(scent_field.Field,Ys,Xs,'linear',-1);
+        Vals(:,1) = interp2(scent_field.Field,Ys,Xs,'makima');
 
         %Find center values
         Xs = list.Pos(:,1) + list.Speed.*cos(list.Dir);
         Ys = list.Pos(:,2) + list.Speed.*sin(list.Dir);
-        Vals(:,2) = interp2(scent_field.Field,Ys,Xs,'nearest',-1);
+%         Vals(:,2) = interp2(scent_field.Field,Ys,Xs,'linear',-1);
+        Vals(:,2) = interp2(scent_field.Field,Ys,Xs,'makima');
 
         %Find left values
         Xs = list.Pos(:,1) + list.Speed.*cos(list.Dir + list.Smell_angle);
         Ys = list.Pos(:,2) + list.Speed.*sin(list.Dir + list.Smell_angle);
-        Vals(:,3) = interp2(scent_field.Field,Ys,Xs,'nearest',-1);
+%         Vals(:,3) = interp2(scent_field.Field,Ys,Xs,'linear',-1);
+        Vals(:,3) = interp2(scent_field.Field,Ys,Xs,'makima');
 
         [max_scents,indexs] = max(Vals,[],2);
 
         max_scents = max(max_scents,zeros(size(max_scents)));
 
-        list.Dir = list.Dir + (indexs-2)*list.Smell_angle;
-        list.Speed = list.Accel*max_scents + list.Speed_base;
+        list.Dir = list.Dir + (indexs-2)*list.Smell_angle + 0.1*rand();
+        list.Speed = (list.Accel*max_scents + list.Speed_base + list.Speed)/2;
     end
 %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 

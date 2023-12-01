@@ -25,7 +25,7 @@ for i=1:1:num_bug
 
     dir = round(rand()*2*pi);
     pos_list(i,:) = [x,y];
-    spd_list(i,1) = 10*rand();
+    spd_list(i,1) = 100*rand();
     dir_list(i,1) = dir;
 
     %also put down their initial scents
@@ -42,7 +42,7 @@ figure(Position=[0,0,700,600])
 
 for t=1:t_steps
 
-    imagesc(scent_field.Field)
+    imagesc(interp2(scent_field.Field))
     drawnow
 
     list.decide_dir(scent_field);
